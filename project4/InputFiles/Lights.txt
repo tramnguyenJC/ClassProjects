@@ -1,0 +1,46 @@
+# DIRECTIONAL LIGHT
+start
+pos 0.5 1.0 1.5 0.0
+ambientColor 0.0 0.0 0.0 1.0
+diffuseColor 1.0 1.0 1.0 1.0
+specularColor 1.0 1.0 1.0 1.0
+constantAtten 1.5
+linearAtten 0.75
+quadraticAtten 0.4
+end
+
+# POINT LIGHT
+start
+pos 0 0 0 1
+ambientColor 0 0 0 1
+diffuseColor 1.000 0.549 0.000 1
+specularColor 1 1 0 1
+constantAtten 1.0
+linearAtten 0
+quadraticAtten 0
+end
+
+# SPOTLIGHT-RED COLOR
+start
+pos 0 1 0 1
+spotlight true
+ambientColor 0.0 0.0 0.0 1.0
+diffuseColor 1 0 0 1
+specularColor 1 0 0 1
+dir 0 0 1
+spotCutOff 10.0
+exponent 2.5
+end
+
+# SPOTLIGHT-RED COLOR
+start
+pos 0 50 -18 1
+spotlight true
+ambientColor 0.0 0.0 0.0 1.0
+diffuseColor 1 0 0 1
+specularColor 1 0 0 1
+dir 0 -1 0
+spotCutOff 10.0
+exponent 2.5
+end
+

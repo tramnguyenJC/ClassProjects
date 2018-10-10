@@ -1,0 +1,59 @@
+start
+file Models/OBJS/Earth.obj
+materialFile Models/OBJS/Earth.mtl
+name Earth
+pos 19 0 -14
+orientation 1 0 0
+scale 1.2 1.9 1.2
+color 1.0 1.0 1.0
+end 
+
+start
+file Models/OBJS/sun.obj
+materialFile Models/OBJS/Sun.mtl
+name Sun
+pos 0 0 0
+orientation 1 0 0
+scale 0.0003 0.0005 0.0003
+color 1.000 0.843 0.000
+end
+
+start
+file Models/OBJS/Earth.obj
+materialFile Models/OBJS/Planet.mtl
+name Moon
+pos 22 0 -17
+orientation 1 0 0
+scale 0.4 0.5 0.4 1
+color 0.8 0.8 0.82 0.6
+end
+
+start
+file Models/OBJS/venus.obj
+materialFile Models/OBJS/venus.mtl
+name Venus
+pos -23 0 -21
+orientation 1 0 0
+scale 0.001 0.0015 0.001
+color 1.0 1.0 1.0
+end
+
+start
+file Models/OBJS/spaceship.obj
+materialFile Models/OBJS/spaceship.mtl
+name Spaceship
+pos 3 20 -24
+orientation -0.2 -0.9 1.0
+scale 0.03 0.03 0.03
+color 1.0 1.0 1.0
+end
+
+#start
+#file Models/OBJS/Grass.obj
+#materialFile Models/OBJS/Grass.mtl
+#name Grass
+#pos 30 0 0
+#orientation 1 0 0
+#scale 3 3 3
+#color 1.0 1.0 1.0
+#end
