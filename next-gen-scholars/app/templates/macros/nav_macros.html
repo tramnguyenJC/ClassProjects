@@ -1,0 +1,135 @@
+{# This macro is called on the user dashboards. In this case the administrator dashboard
+   at the route admin.index
+#}
+
+{% macro render_menu_items(endpoints) %}
+    {% for endpoint, name, icon in endpoints %}
+        <a class="item {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
+            {% if icon %}
+                <i class="{{ icon }} icon"></i>
+            {% endif %}
+            {{ name | safe }}
+        </a>
+    {% endfor %}
+{% endmacro %}
+
+{# This is called for all users (including anonymous users). It renders the basic left side of the
+   navigation bar. In the default case, the left hand side will read 'qk-Base'. In the logged in
+   admin case, there will also be an item that links to admin/ route. I have added an example use of
+   render_menu_items.
+#}
+
+{% macro header_items(current_user) %}
+    {% if not current_user.is_authenticated %}
+      {% set endpoints = [
+      ] %}
+    {% else %}
+      {% if current_user.is_student() %}
+        {% set endpoints = [
+          ('student.dashboard', 'Tasks', 'tasks'),
+          ('student.view_user_profile', 'Profile', 'user'),
+          ('student.calendar', 'Calendar', 'calendar'),
+          ('student.colleges', 'Colleges', 'university'),
+          ('student.scholarships', 'Scholarships', 'money bill alternate outline icon'),
+
+          ('main.resources', 'Resources', 'file text outline')
+        ] %}
+      {% elif current_user.is_counselor() %}
+        {% set endpoints = [
+          ('counselor.index', 'Dashboard', 'dashboard'),
+          ('counselor.student_database', 'Students', 'student'),
+          ('main.calendar', 'Calendar', 'calendar'),
+          ('counselor.colleges', 'Colleges', 'university'),
+          ('counselor.scholarships', 'Scholarships', 'money bill alternate outline icon'),
+          ('main.resources', 'Resources', 'file text outline')
+        ] %}
+      {% else %}
+        {% set endpoints = [
+          ('admin.index', 'Dashboard', 'dashboard'),
+          ('admin.student_database', 'Students', 'student'),
+          ('main.calendar', 'Calendar', 'calendar'),
+          ('counselor.colleges', 'Colleges', 'university'),
+          ('counselor.scholarships', 'Scholarships', 'money bill alternate outline icon'),          
+          ('main.resources', 'Resources', 'file text outline')
+        ] %}
+      {% endif %}
+    {% endif %}
+    {{ render_menu_items(endpoints) }}
+{% endmacro %}
+
+{# This renders the right hand side of the navigation bar. If the user is logged in, it links to
+   manage their account and logout (account routes). Otherwise, it links to register and login.
+#}
+{% macro account_items(current_user) %}
+    {% if not current_user.is_authenticated %}
+      {% set endpoints = [
+        ('account.register', 'Register', 'list layout'),
+        ('account.login', 'Log In', 'sign in')
+      ] %}
+      {{ render_menu_items(endpoints) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro mobile_nav(pageType, current_user, dropdown=None) %}  
+    {% if pageType=='home' or pageType=='college_profile' or pageType=='resources' %}
+        <!-- Removes padding under navbar for pages with image jumbotrons -->
+        <div style="padding-bottom:0px;" class="mobile tablet only row">
+    {% else %}
+        <div class="mobile tablet only row">
+    {% endif %}
+            <div style="background-color:#2D9DDF;" class="ui fixed inverted main menu">
+             <a class="item" href="/">Next Generation Scholars</a>
+              <div class="right menu">
+                  <a class="icon item" id="open-nav"><i class="sidebar icon"></i></a>
+              </div>
+            </div>
+        
+          {# The menu items which will be shown when open-nav is clicked #}
+          <div class="ui fixed vertical fluid menu">
+            {{ header_items(current_user) }}
+            {{ account_items(current_user) }} 
+            {{ create_dropdown(dropdown) }}
+          </div>
+        </div>
+{% endmacro %}
+
+{% macro create_dropdown(dropdown) %}
+  {% for item in dropdown %}
+    {% if item | length == 3 %}
+      {{ render_menu_items([item]) }}
+    {% elif item | length == 2 %}
+      <div class="ui dropdown item" onClick="changeMenu(this)">{{ item[0] }} <i class="dropdown icon"></i>
+        <div class="inverted black menu">
+          {{ create_dropdown(item[1]) }}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% macro desktop_nav(pageType, current_user, dropdown=None) %}
+    {% if pageType=='home' or pageType=='college_profile' or pageType=='resources' %}
+        <!-- Removes padding under navbar for pages with image jumbotrons -->        
+        <div style="padding-bottom: 0px;" class="computer only row">
+    {% else %}
+      <div class="computer only row">
+    {% endif %}   
+        <div style="background-color:#2D9DDF;" class="ui fixed inverted main menu">
+          <div class="ui container">
+            <a class="item" href="/">Next Generation Scholars</a>
+            <div class="right menu">
+              {{ header_items(current_user) }}
+              {{ account_items(current_user) }} 
+              {{ create_dropdown(dropdown) }}
+            </div>
+          </div>
+        </div>
+      </div>
+{% endmacro %}
+
+{% macro render_nav(page, current_user, dropdown=[]) %}
+    <nav class="ui navigation grid {% if endpoints %}has-submenu{% endif %}">
+        {{ mobile_nav(page, current_user, dropdown=dropdown) }}
+        {{ desktop_nav(page, current_user, dropdown=dropdown) }}
+    </nav>
+{% endmacro %}

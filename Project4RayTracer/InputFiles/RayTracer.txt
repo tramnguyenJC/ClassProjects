@@ -1,0 +1,12 @@
+# Input file for ray tracer
+
+# Camera parameters
+eyePos 0 0 0
+lookAt 0 0 -1
+upVec 0 1 0
+fieldOfView 45
+defaultBackground 1 1 1 1
+maxDepth 4
+
+Spheres InputFiles/Spheres.txt
+Lights InputFiles/Lights.txt

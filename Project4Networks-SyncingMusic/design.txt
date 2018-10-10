@@ -1,0 +1,129 @@
+Client:
+
+    - command line arguments: server IP address/name and port number
+
+    - open connection with server
+
+    - display menu for user
+
+    - listen for client input on stdin
+
+    - check input validity
+
+    - call function based on input
+        - if LIST, send LIST request    -- Tracy
+        - if DIFF, send LIST request and compare to files in current directory   -- Tracy
+        - if SYNC, send LIST request, compare to current files, push files not in the server,
+          request files from server   -- Renae
+        - if LEAVE, send BYE! message and end connection; end program   -- Renae
+
+Server:
+
+    - command line args: port, (might want to specify the log file)
+
+    - set up connections
+
+    - accept connections
+        - threading code (mostly copied from the book)
+
+    - function for handling each client
+        - need some kind of variable for client information
+
+    - function for LIST command  -- Rachel v1.0
+        - use ls -1 to get file names
+        - hash each file
+        - create struct for each file name, hash pair and send
+
+    - function for PULL command
+        - get the size of each included file
+        - create struct with file name and size
+        - read each file (fread and fwrite or C++ std::ios::binary)
+        - send each struct, followed by associated file
+
+    - function for PUSH message
+        - copy first 259 bytes into push_file struct
+        - read in the rest of the file and write it into the directory
+
+    - BYE! message
+        - each function needs to add to client information
+        - after receiving BYE! message, need to try to open the file and append information
+        - kill thread after file has been written
+        
+
+Messages:
+
+LIST:
+    client: "LIST", no data
+        struct header packet;
+        packet.type = "LIST";
+        packet.length = 0;
+    server: "LIST", list of files and corresponding hashes
+        struct header packet;
+        packet.type = "LIST";
+        packet.length = $(files it has)
+        -- send length file_name structs with file names and SHA256 hash
+
+PULL: "PULL", list of files
+    struct header packet;
+    packet.type = "PULL";
+    packet.length = $(files needed);
+    
+    -- send length file_name structs with file names and SHA256 hash
+
+PUSH: "PUSH", files
+    struct header packet;
+    packet.type = "PUSH";
+    packet.length = $(number of files)
+    
+    -- send length push_file structs, each followed by a file
+
+LEAVE: "BYE!", no data
+    struct header packet;
+    packet.type = "BYE!";
+    packet.length = 0;
+
+end of messages?
+
+
+Client information:
+-------------------
+store client information, then add to file after connection is terminated
+identify clients by IP address
+
+Store information about what requests the client makes and what files the
+client has based on the information the server has (probably just add to
+a list with every PULL request the client makes)
+    - it's easy to just append with a log, but keeping a running list of
+      files is going to be a little more involved
+
+Lock: boolean flag indicating that the file is open
+
+Need to determine how we're going to store all of this.
+
+
+pthreads(): uses a single port instead of multiple ports, makes clients simpler
+and hides details that they don't really need to know
+
+
+Questions:
+----------
+WHY?
+Architecture document -- how detailed? what should be included? etc
+
+
+Things to think about:
+----------------------
+Maybe the client should keep a running array of the files it has? It would be kind of a pain
+to have to add to it when syncing files, but it means we wouldn't have to rehash them with
+each DIFF request.
+
+
+To do:
+------
+- testing
+    --> there is sometimes an issue where multiple list requests don't work
+        further, on the first request the client lists empty file names, so that's
+        probably a related issue
+    --> there is sometimes a seg fault in the client when syncing; this may be the
+        same issue as before
+

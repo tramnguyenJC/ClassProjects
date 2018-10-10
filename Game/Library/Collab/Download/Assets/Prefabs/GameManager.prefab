@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1442860520134692}
+  m_IsPrefabAsset: 1
+--- !u!1 &1442860520134692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4265626330548270}
+  - component: {fileID: 114184924515250894}
+  - component: {fileID: 114452446142066908}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4265626330548270
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442860520134692}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.041901, y: -0.72596484, z: -9.980734}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114184924515250894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442860520134692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48453b24996aeee43b46e902b3a05c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114452446142066908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442860520134692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da382cb4a5d50f458485b72ca151895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 1511597596364748, guid: cfb8ea624a8ee4f9388774a3cba303d6, type: 2}
+  playerArrow: {fileID: 1795016588812974, guid: 6b134d970d89346b18368c33f5485634,
+    type: 2}
+  badBase: {fileID: 1339096755248706, guid: f727299e9e46c44d992bcd2b58cf4fd3, type: 2}
+  goodBase: {fileID: 1747976977610844, guid: 396d670a28db44c888ac4d293820e3e2, type: 2}
+  enemyGenerator: {fileID: 1879300509569926, guid: 1f976c9a55fc33a4d90c8579a4be37d1,
+    type: 2}

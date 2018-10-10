@@ -1,0 +1,81 @@
+{% import 'macros/nav_macros.html' as nav %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'partials/_head.html' %}
+        {# Any templates that extend this template can set custom_head_tags to add scripts to their page #}
+        {% block custom_head_tags %}{% endblock %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif" rel="stylesheet">
+    </head>
+    <body>
+        {% set dropdown = [] %}
+        {% if current_user.is_admin() %}
+            {% set dropdown =
+              [
+                ('Account',
+                  [
+                    ('account.manage', 'Your Account', 'settings'),
+                    ('admin.index', 'Manage Users', 'user'),
+                    ('account.logout', 'Log out', 'sign out'),
+                  ]
+                ),
+              ]
+            %}
+        {% elif current_user.is_counselor() %}
+          {% set dropdown =
+            [
+              ('Account',
+                [
+                  ('account.manage', 'Your Account', 'settings'),
+                  ('account.logout', 'Log out', 'sign out'),
+                ]
+              ),
+            ]
+          %}
+        {% elif current_user.is_authenticated %}
+          {% set dropdown =
+            [
+              ('Account',
+                [
+                  ('account.manage', 'Your Account', 'settings'),
+                  ('account.logout', 'Log out', 'sign out'),
+                ]
+              ),
+            ]
+          %}
+        {% endif %}
+
+        {% block nav %}
+          {# add dropdown variable here to the render_nav method to render dropdowns #}
+          {# add pageType variable here to the render_nav method for padding pages differently #}
+          {{ nav.render_nav(pageType, current_user, dropdown) }}
+        {% endblock %}
+
+        {% include 'partials/_flashes.html' %}
+        {# When extended, the content block contains all the html of the webpage #}
+        {% block content %}
+        {% endblock %}
+
+        {# Implement CSRF protection for site #}
+        {% if csrf_token()|safe %}
+            <div style="visibility: hidden; display: none">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token()|safe }}">
+            </div>
+        {% endif %}
+        <div class="ui inverted vertical footer segment" style="background-color:#2D9DDF; position:fixed; bottom: 0px; width: 100%">
+            <div class="ui centered container">
+                <div class="two wide column">
+                    <div id="google_translate_element" style="display:inline; margin: 0 auto; max-width: 20px"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</html>

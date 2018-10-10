@@ -1,0 +1,46 @@
+# For each Particle Generator, the type denotes which type the generator is (Point, Line, Circle, Beam, Fire, Firework)
+# For Point Particle Generator, input format is: 
+# type Point position <position.x> <position.y> <position.z>
+# For Line Particle Generator, input format is: 
+# type Line point1 <point1.x> <point1.y> <point1.z> point2 <point2.x> <point2.y> <point2.z> normal <normal.x> <normal.y> <normal.z>
+# For normal specification of line, (x,y,z) in [-1,1] range.
+# For Circle Particle Generator, input format is:
+# type Point center <center.x> <center.y> <center.z> radius <radius> normal <normal.x> <normal.y> <normal.z>
+# For Beam Particle Generator, input format is:
+# type Point center <center.x> <center.y> <center.z> radius <radius> normal <normal.x> <normal.y> <normal.z>
+
+start
+type Star lowerLeftPoint -60 -60 -60 width 120 height 120 normal 1 0 0
+distribution uniform
+maxParticles 700000
+minimumLife 100
+maximumLife 200
+minNumGenerated 20
+maxNumGenerated 40
+timeIntervalGeneration 60
+# List color in order of color transitions
+color 0.9 0.9 0.9
+color 1.0 1.0 1.0
+alphaStart 1.0
+alphaEnd 0.4
+size 1.0
+mass 1.0
+end
+
+start
+type Star lowerLeftPoint -50 -60 -60 width 120 height 120 normal 1 0 0
+distribution uniform
+maxParticles 700000
+minimumLife 100
+maximumLife 200
+minNumGenerated 10
+maxNumGenerated 20
+timeIntervalGeneration 30
+# List color in order of color transitions
+color 0.9 0.9 0.9
+color 1.0 1.0 1.0
+alphaStart 1.0
+alphaEnd 0.4
+size 2
+mass 1.0
+end

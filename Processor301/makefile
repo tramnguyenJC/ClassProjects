@@ -1,0 +1,2 @@
+all: 
+	g++ -g -std=c++11 Add.cpp ALU.cpp ALUControl.cpp ASMParser.cpp Control.cpp Converter.cpp DataMemory.cpp FileParser.cpp Instruction.cpp InstructionMemory.cpp Left2Shifter.cpp main.cpp Memory.cpp Multiplexor.cpp Opcode.cpp PC.cpp Processor.cpp RegisterMemory.cpp RegisterTable.cpp SignExtender.cpp -o make

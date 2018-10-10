@@ -1,0 +1,11 @@
+# POINT LIGHT
+start
+pos -10 -20 0 1
+ambientColor 0 0 0
+diffuseColor 1 1 1
+specularColor 1 1 1
+constantAtten 1.0
+linearAtten 0
+quadraticAtten 0
+end
+

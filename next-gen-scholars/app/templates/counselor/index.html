@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %}
+
+{% macro dashboard_option(title, endpoint, description=None, icon=None) %}
+    <a class="column" href="{{ url_for(endpoint) }}">
+        <div class="ui padded segment">
+            <h3 class="ui header">
+                {% if icon is not none %}
+                    <i style="color:#1A85D6;" class="{{ icon }}"></i>
+                {% endif %}
+                <div class="content">
+                    {{ title }}
+                    {% if description is not none %}
+                        <div class="sub header">
+                            {{ description }}
+                        </div>
+                    {% endif %}
+                </div>
+            </h3>
+        </div>
+    </a>
+{% endmacro %}
+
+{% block content %}
+    <div class="ui stackable grid centered container" style="margin-top:12px; margin-bottom:64px">
+        <div class="twelve wide computer sixteen wide mobile column">
+            <h2 class="ui dividing header">Counselor Dashboard</h2>
+            <div class="ui two column stackable grid">
+                {{ dashboard_option('View Students', 'counselor.student_database',
+                description='View student profiles and add tasks', icon='student icon') }}
+                {{ dashboard_option('View Default Tasks', 'counselor.default_checklist',
+                description='View and add default tasks for all students', icon='tasks icon') }}
+            </div>
+            <h4 class="ui dividing header">Colleges</h4>
+            <div class="ui two column stackable grid">
+                {{ dashboard_option('View Colleges', 'counselor.colleges',
+                description='View and edit college descriptions', icon='university icon') }}
+                {{ dashboard_option('Add College', 'counselor.add_college',
+                description='Add a new college profile', icon='plus icon') }}
+                {{ dashboard_option('Delete College', 'counselor.delete_college',
+                description='Delete an existing college profile', icon='remove icon') }}
+                {{ dashboard_option('Upload Scattergram Data', 'counselor.upload_scattergram',
+                description='Upload college acceptance data for scattergrams', icon='bar chart icon')}}
+            </div>
+            <h4 class="ui dividing header">Scholarships</h4>
+            <div class="ui two column stackable grid">
+                {{ dashboard_option('View Scholarships', 'counselor.scholarships', 
+                description='View and edit scholarhip descriptions', icon='money bill alternate outline icon') }}
+                {{ dashboard_option('Add Scholarship', 'counselor.add_scholarship',
+                description='Add a new scholarship profile', icon='plus icon') }}
+                {{ dashboard_option('Delete Scholarship', 'counselor.delete_scholarship',
+                description='Delete an existing scholarship profile', icon='remove icon') }}
+                {{ dashboard_option('Edit Scholarship', 'counselor.edit_scholarship_step1',
+                description='Edit existing scholarship profile', icon='edit icon')}}
+            </div>
+            <h4 class="ui dividing header">SMS Alerts</h4>
+            <div class="ui two column stackable grid">
+                {{ dashboard_option('Manage SMS Alerts', 'counselor.manage_alerts',
+                description='View and manage SMS alerts', icon='phone icon') }}
+                {{ dashboard_option('Add SMS Alert', 'counselor.add_alert',
+                description='Add new SMS alerts', icon='plus icon') }}
+            </div>
+            <h4 class="ui dividing header">Tests</h4>
+            <div class="ui two column stackable grid">
+                {{ dashboard_option('Add Test', 'counselor.add_test_name',
+                description='Add a test that students can enter scores for', icon='file text icon') }}
+                {{ dashboard_option('Edit Tests', 'counselor.edit_test_name',
+                description='Edit existing test names', icon='edit icon') }}
+                {{ dashboard_option('Delete Test', 'counselor.delete_test_name',
+                description='Delete an existing test name', icon='remove icon') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 22.08.2014 14:33:17
+
+newmtl blinn1
+Ns 3.1699247360
+Ni 1.5
+d 1.0
+Tr 0.0
+Tf 1.0 1.0 1.0 1
+illum 2
+Ka 1 1 1 1
+Kd 0.8000000119 0.8000000119 0.8000000119 1
+Ks 1 1 1 1
+Ke 0 0 0 1
+map_Kd Models/OBJS/spaceship.tga

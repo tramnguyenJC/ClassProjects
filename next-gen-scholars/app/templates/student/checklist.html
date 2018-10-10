@@ -1,0 +1,123 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+
+{% macro render_checklist(checklist) %}
+    <table class="ui table">
+        <thead>
+            <tr><th colspan="3">
+              Upcoming
+            </th>
+        </tr></thead>
+        {% if checklist|length > 0 %}
+    	{% for item in checklist %}
+            <tr>
+                <td class = "collapsing">
+                    <a class="ui small basic icon button" href="{{ url_for('student.complete_checklist_item', item_id=item.id) }}">
+                        <i class="checkmark box icon"></i>
+                    </a>
+                    {% if item.is_deletable %}
+                        <a class="ui small basic icon button" href="{{ url_for('student.update_checklist_item', item_id=item.id) }}">
+                            <i class="write icon"></i>
+                        </a>
+                        <a class="ui small basic icon button" href="{{ url_for('student.delete_checklist_item', item_id=item.id) }}">
+                            <i class="remove icon"></i>
+                        </a>
+                    {% endif %}
+                </td>
+                <td> {{ '%s' % (item.text) }}
+                </td>
+            	<td class="two wide">
+                    {% if item.deadline %}
+                        <b> {{  '%s' % (item.deadline)  }} </b>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="4">
+              No tasks.
+            </td>
+          </tr>
+          {% endif %}
+    </table>
+{% endmacro %}
+
+{% macro completed_list(completed) %}
+    <table class="ui table">
+        <thead>
+            <tr><th colspan="2">
+              Completed
+            </th>
+        </tr></thead>
+        {% if completed|length > 0 %}
+        {% for item in completed %}
+            <tr class="positive">
+                <td class="collapsing">
+                    <a class="ui small basic icon button" href="{{ url_for('student.undo_checklist_item', item_id=item.id) }}">
+                        <i class="undo icon"></i>
+                    </a>
+                    {% if item.is_deletable %}
+                        <a class="ui small basic icon button" href="{{ url_for('student.delete_checklist_item', item_id=item.id) }}">
+                            <i class="remove icon"></i>
+                        </a>
+                    {% endif %}
+
+                </td>
+                <td>{{ '%s' % (item.text) }}</td>
+            </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">
+              No completed tasks.
+            </td>
+          </tr>
+        {% endif %}
+    </table>
+
+{% endmacro %}
+
+{% block content %}
+<div class="ui stackable centered grid container" style="margin-top:12px; margin-bottom:64px">
+    <div class="twelve wide computer sixteen wide mobile column">
+        <h2 class="ui dividing header">
+            Tasks
+            <div class="sub header">Keep track of your tasks and deadlines</div>
+        </h2>
+        {% if notifications %}
+        <div class="stretched divided very relaxed row">
+            <div class="ui info message">
+                <i class="close icon"></i>
+                <div class="header">
+                    Notifications
+                </div>
+                <ul class="list">
+                    {% for n in notifications %}
+                    <li>{{ n[0].text }} {{ n[1] }}.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        <div class="stretched divided very relaxed row">
+        	{{ render_checklist(checklist) }}
+            <button class="ui green button" id="add-checklist-item"><i class="plus icon" ></i>Add Item</button>
+            {{ completed_list(completed) }}
+        </div>
+    </div>
+    <div id="add-checklist-item-modal" class="ui tiny modal">
+        <div class="ui segment">
+            {{ f.render_form(form, extra_classes='fluid') }}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#add-checklist-item').click(function() {
+        $('#add-checklist-item-modal').modal('show');
+    });
+});
+</script>
+{% endblock %}
